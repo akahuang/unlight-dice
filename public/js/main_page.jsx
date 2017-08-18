@@ -74,30 +74,28 @@ var MainPage = React.createClass({
           <h2> Hit: {this.state.hit} </h2>
         </div>
 
-        <div className="col-md-9 col-xs-9">
-          <div className="row ">
-            <MyButton button_count="3" onClick={this.onNumberClick} name="7" />
-            <MyButton button_count="3" onClick={this.onNumberClick} name="8" />
-            <MyButton button_count="3" onClick={this.onNumberClick} name="9" />
-          </div>
-          <div className="row">
-            <MyButton button_count="3" onClick={this.onNumberClick} name="4" />
-            <MyButton button_count="3" onClick={this.onNumberClick} name="5" />
-            <MyButton button_count="3" onClick={this.onNumberClick} name="6" />
-          </div>
-          <div className="row">
-            <MyButton button_count="3" onClick={this.onNumberClick} name="1" />
-            <MyButton button_count="3" onClick={this.onNumberClick} name="2" />
-            <MyButton button_count="3" onClick={this.onNumberClick} name="3" />
-          </div>
-          <div className="row">
-            <MyButton button_count="1" onClick={this.onNumberClick} name="10" />
-          </div>
+        <div className="row ">
+          <MyButton button_count="3" onClick={this.onResetClick} name="AC" />
+          <MyButton button_count="3" onClick={this.onPopClick} name="Back" />
+          <MyButton button_count="3" onClick={this.onRollDiceClick} name="Roll Dice" />
         </div>
-        <div className="col-md-3 col-xs-3">
-            <MyButton button_count="1" onClick={this.onResetClick} name="AC" />
-            <MyButton button_count="1" onClick={this.onPopClick} name="Back" />
-            <MyButton button_count="1" onClick={this.onRollDiceClick} name="Roll Dice" />
+        <div className="row ">
+          <MyButton button_count="3" onClick={this.onNumberClick} name="7" />
+          <MyButton button_count="3" onClick={this.onNumberClick} name="8" />
+          <MyButton button_count="3" onClick={this.onNumberClick} name="9" />
+        </div>
+        <div className="row">
+          <MyButton button_count="3" onClick={this.onNumberClick} name="4" />
+          <MyButton button_count="3" onClick={this.onNumberClick} name="5" />
+          <MyButton button_count="3" onClick={this.onNumberClick} name="6" />
+        </div>
+        <div className="row">
+          <MyButton button_count="3" onClick={this.onNumberClick} name="1" />
+          <MyButton button_count="3" onClick={this.onNumberClick} name="2" />
+          <MyButton button_count="3" onClick={this.onNumberClick} name="3" />
+        </div>
+        <div className="row">
+          <MyButton button_count="1" onClick={this.onNumberClick} name="10" />
         </div>
       </div>
     );
