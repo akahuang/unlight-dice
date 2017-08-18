@@ -1,0 +1,14 @@
+.button-padding {
+  padding-right: 3px;
+  padding-left: 3px;
+}
+
+.panel-heading {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.panel-body {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
