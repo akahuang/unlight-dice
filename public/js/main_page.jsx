@@ -10,11 +10,20 @@
  *    - ResultButtonGroup
  */
 
-
+function RollDice(number) {
+  var ret = 0;
+  for (var i = 0; i < number; i++) {
+    if (Math.random() * 3 > 1) {
+      ret += 1;
+    }
+  }
+  return ret;
+}
 
 var MainPage = React.createClass({
   getInitialState: function() {
     return {
+      hit: "???",
       number_arr: [],
       total: 0,
     };
@@ -31,6 +40,7 @@ var MainPage = React.createClass({
   },
   onResetClick: function() {
     this.setState({
+      hit: "???",
       number_arr: [],
       total: 0,
     });
@@ -44,6 +54,9 @@ var MainPage = React.createClass({
     this.setState(new_state);
   },
   onRollDiceClick: function() {
+    var new_state = Object.assign({}, this.state);
+    new_state.hit = RollDice(this.state.total);
+    this.setState(new_state);
   },
 
   render: function() {
@@ -53,9 +66,15 @@ var MainPage = React.createClass({
     console.info(display1 + display2);
     return (
       <div className="container-fluid">
-        <h2> {display1} </h2>
-        <h2> {display2} </h2>
-        <div className="col-md-9">
+        <div className="col-md-9  col-xs-9">
+          <h2> {display1} </h2>
+          <h2> {display2} </h2>
+        </div>
+        <div className="col-md-3  col-xs-3">
+          <h2> Hit: {this.state.hit} </h2>
+        </div>
+
+        <div className="col-md-9 col-xs-9">
           <div className="row ">
             <MyButton button_count="3" onClick={this.onNumberClick} name="7" />
             <MyButton button_count="3" onClick={this.onNumberClick} name="8" />
@@ -75,7 +94,7 @@ var MainPage = React.createClass({
             <MyButton button_count="1" onClick={this.onNumberClick} name="10" />
           </div>
         </div>
-        <div className="col-md-3">
+        <div className="col-md-3 col-xs-3">
             <MyButton button_count="1" onClick={this.onResetClick} name="AC" />
             <MyButton button_count="1" onClick={this.onPopClick} name="Back" />
             <MyButton button_count="1" onClick={this.onRollDiceClick} name="Roll Dice" />
