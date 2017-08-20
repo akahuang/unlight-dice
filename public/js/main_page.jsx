@@ -1,4 +1,5 @@
 function RollDice(number) {
+  console.log("RollDice " + number.toString());
   var ret = 0;
   for (var i = 0; i < number; i++) {
     if (Math.random() * 3 < 1) {
@@ -8,12 +9,28 @@ function RollDice(number) {
   return ret;
 }
 
+function Sum(num_arr) {
+  var sum = 0;
+  for (var i = 0; i < num_arr.length; i++) {
+    sum += num_arr[i];
+  }
+  return sum;
+}
+
+function Display(num_arr) {
+  var sum = Sum(num_arr);
+  var display = num_arr.join(" + ");
+  if (display == "") display = "0";
+  display += " = " + sum;
+  return display;
+}
+
 var MainPage = React.createClass({
   getInitialState: function() {
     return {
-      hit: "???",
-      number_arr: [],
-      total: 0,
+      site: 0,
+      hit: ["???", "???"],
+      number_arr: [[], []],
     };
   },
 
@@ -22,38 +39,42 @@ var MainPage = React.createClass({
     console.info("onNumberClick: ");
     console.info(num);
     var new_state = Object.assign({}, this.state);
-    new_state.number_arr.push(num);
-    new_state.total += num;
+    new_state.number_arr[this.state.site].push(num);
     this.setState(new_state);
+    console.info(new_state);
   },
   onResetClick: function() {
     this.setState({
-      hit: "???",
-      number_arr: [],
-      total: 0,
+      site: 0,
+      hit: ["???", "???"],
+      number_arr: [[], []],
     });
   },
   onPopClick: function() {
     var new_state = Object.assign({}, this.state);
     console.info(new_state);
-    if (new_state.number_arr.length == 0) {
+    if (new_state.number_arr[this.state.site].length == 0) {
       return;
     }
-    var number = new_state.number_arr.pop();
-    new_state.total -= number;
+    new_state.number_arr[this.state.site].pop();
     console.info(new_state);
     this.setState(new_state);
   },
   onRollDiceClick: function() {
     var new_state = Object.assign({}, this.state);
-    new_state.hit = RollDice(this.state.total);
+    new_state.hit[0] = RollDice(Sum(this.state.number_arr[0]));
+    new_state.hit[1] = RollDice(Sum(this.state.number_arr[1]));
+    this.setState(new_state);
+  },
+  onSiteButtonClick: function(button, event) {
+    var new_state = Object.assign({}, this.state);
+    new_state.site = button.props.index;
     this.setState(new_state);
   },
 
   render: function() {
-    var display1 = this.state.number_arr.join(" + ");
-    if (display1 == "") display1 = "0";
-    var display2 = "= " + this.state.total;
+    var display1 = "攻方:" + Display(this.state.number_arr[0]);
+    var display2 = "防方:" + Display(this.state.number_arr[1]);
     console.info(display1 + display2);
     return (
       <div className="container-fluid">
@@ -62,13 +83,18 @@ var MainPage = React.createClass({
           <h2> {display2} </h2>
         </div>
         <div className="col-md-3  col-xs-3">
-          <h2> Hit: {this.state.hit} </h2>
+          <h2> Hit: {this.state.hit[0]} </h2>
+          <h2> Hit: {this.state.hit[1]} </h2>
         </div>
 
         <div className="row ">
           <MyButton button_count="3" onClick={this.onResetClick} name="AC" />
           <MyButton button_count="3" onClick={this.onPopClick} name="Back" />
           <MyButton button_count="3" onClick={this.onRollDiceClick} name="Roll Dice" />
+        </div>
+        <div className="row ">
+          <MyButton button_count="2" onClick={this.onSiteButtonClick} index="0" enabled={this.state.site == 0} name="攻方" />
+          <MyButton button_count="2" onClick={this.onSiteButtonClick} index="1" enabled={this.state.site == 1} name="防方" />
         </div>
         <div className="row ">
           <MyButton button_count="3" onClick={this.onNumberClick} name="7" />
