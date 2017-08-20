@@ -29,7 +29,7 @@ var MainPage = React.createClass({
   getInitialState: function() {
     return {
       site: 0,
-      hit: ["???", "???"],
+      hit: ["?", "?"],
       number_arr: [[], []],
     };
   },
@@ -46,7 +46,7 @@ var MainPage = React.createClass({
   onResetClick: function() {
     this.setState({
       site: 0,
-      hit: ["???", "???"],
+      hit: ["?", "?"],
       number_arr: [[], []],
     });
   },
@@ -78,19 +78,19 @@ var MainPage = React.createClass({
     console.info(display1 + display2);
     return (
       <div className="container-fluid">
-        <div className="col-md-9  col-xs-9">
-          <h2> {display1} </h2>
-          <h2> {display2} </h2>
+        <div className="col-md-8  col-xs-8">
+          <h3> {display1} </h3>
+          <h3> {display2} </h3>
         </div>
-        <div className="col-md-3  col-xs-3">
-          <h2> Hit: {this.state.hit[0]} </h2>
-          <h2> Hit: {this.state.hit[1]} </h2>
+        <div className="col-md-4  col-xs-4">
+          <h3> 骰出: {this.state.hit[0]} </h3>
+          <h3> 骰出: {this.state.hit[1]} </h3>
         </div>
 
         <div className="row ">
-          <MyButton button_count="3" onClick={this.onResetClick} name="AC" />
-          <MyButton button_count="3" onClick={this.onPopClick} name="Back" />
-          <MyButton button_count="3" onClick={this.onRollDiceClick} name="Roll Dice" />
+          <MyButton button_count="3" onClick={this.onResetClick} name="歸零" />
+          <MyButton button_count="3" onClick={this.onPopClick} name="刪除" />
+          <MyButton button_count="3" onClick={this.onRollDiceClick} name="丟骰" />
         </div>
         <div className="row ">
           <MyButton button_count="2" onClick={this.onSiteButtonClick} index="0" enabled={this.state.site == 0} name="攻方" />
