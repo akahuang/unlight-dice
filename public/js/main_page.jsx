@@ -1,15 +1,3 @@
-/*  - RecordPage
- *    - Navtab
- *      - Nav
- *    - ScoreGroup
- *      - HostScore
- *      - GuestScore
- *    - PlayerButtonGroup
- *      - PlayerButton
- *    - ActionButtonGroup
- *    - ResultButtonGroup
- */
-
 function RollDice(number) {
   var ret = 0;
   for (var i = 0; i < number; i++) {
@@ -48,6 +36,9 @@ var MainPage = React.createClass({
   onPopClick: function() {
     var new_state = Object.assign({}, this.state);
     console.info(new_state);
+    if (new_state.number_arr.length == 0) {
+      return;
+    }
     var number = new_state.number_arr.pop();
     new_state.total -= number;
     console.info(new_state);
