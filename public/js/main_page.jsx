@@ -31,6 +31,7 @@ var MainPage = React.createClass({
       site: 0,
       hit: ["?", "?"],
       number_arr: [[], []],
+      single_dice: "?",
     };
   },
 
@@ -44,11 +45,7 @@ var MainPage = React.createClass({
     console.info(new_state);
   },
   onResetClick: function() {
-    this.setState({
-      site: 0,
-      hit: ["?", "?"],
-      number_arr: [[], []],
-    });
+    this.setState(this.getInitialState());
   },
   onPopClick: function() {
     var new_state = Object.assign({}, this.state);
@@ -71,32 +68,47 @@ var MainPage = React.createClass({
     new_state.site = button.props.index;
     this.setState(new_state);
   },
+  onDiceClick: function() {
+    var new_state = Object.assign({}, this.state);
+    new_state.single_dice = Math.ceil(Math.random() * 6);
+    this.setState(new_state);
+  },
 
   render: function() {
-    var display1 = "攻方:" + Display(this.state.number_arr[0]);
-    var display2 = "防方:" + Display(this.state.number_arr[1]);
-    console.info(display1 + display2);
+    var display0 = "攻方:" + Display(this.state.number_arr[0]);
+    var display1 = "防方:" + Display(this.state.number_arr[1]);
+    console.info(display0 + display1);
+    var hit;
+    if (isNaN(parseInt(this.state.hit[0]))) {
+      hit = "?";
+    } else {
+      hit = (parseInt(this.state.hit[0]) - parseInt(this.state.hit[1]));
+      if (hit < 0) {
+        hit = 0;
+      }
+    }
     return (
       <div className="container-fluid">
         <div className="col-md-8  col-xs-8">
+          <h3> {display0} </h3>
           <h3> {display1} </h3>
-          <h3> {display2} </h3>
         </div>
         <div className="col-md-4  col-xs-4">
           <h3> 骰出: {this.state.hit[0]} </h3>
           <h3> 骰出: {this.state.hit[1]} </h3>
+          <h3> 傷害: {hit} </h3>
         </div>
 
-        <div className="row ">
+        <div className="row">
           <MyButton button_count="3" onClick={this.onResetClick} name="歸零" />
           <MyButton button_count="3" onClick={this.onPopClick} name="刪除" />
           <MyButton button_count="3" onClick={this.onRollDiceClick} name="丟骰" />
         </div>
-        <div className="row ">
+        <div className="row">
           <MyButton button_count="2" onClick={this.onSiteButtonClick} index="0" enabled={this.state.site == 0} name="攻方" />
           <MyButton button_count="2" onClick={this.onSiteButtonClick} index="1" enabled={this.state.site == 1} name="防方" />
         </div>
-        <div className="row ">
+        <div className="row">
           <MyButton button_count="3" onClick={this.onNumberClick} name="7" />
           <MyButton button_count="3" onClick={this.onNumberClick} name="8" />
           <MyButton button_count="3" onClick={this.onNumberClick} name="9" />
@@ -113,6 +125,11 @@ var MainPage = React.createClass({
         </div>
         <div className="row">
           <MyButton button_count="1" onClick={this.onNumberClick} name="10" />
+        </div>
+        <hr/>
+        <div className="row">
+          <MyButton button_count="2" onClick={this.onDiceClick} name="丟顆六面骰" />
+          <h3> 點數: {this.state.single_dice} </h3>
         </div>
       </div>
     );
